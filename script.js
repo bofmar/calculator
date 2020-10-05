@@ -73,9 +73,15 @@ function getKeyID(e) {
         case "power":
             operate("power");
             break;
+        case "equals":
+            operate("equals");
+            break;
         //decimal
         case "point":
             updateDisplay(".");
+            break;
+        case "neg":
+            updateDisplay("-");
             break;
         default:
             console.log("something else was pressed");
@@ -84,7 +90,7 @@ function getKeyID(e) {
 
 function updateDisplay(str) {
     //max length of display = 10 chars
-    (currentDisplay === "0" && str === "0") ? 1 : (currentDisplay === "ERROR" && str != "AC") ? 1 : (str === "." && currentDisplay.includes(str)) ? 1 : (currentDisplay === "0" && str === ".") ? currentDisplay += str : (currentDisplay === "0" && str != "AC" && str != "DEL") ? currentDisplay = str : (currentDisplay.length + str.length > 10 && str != "AC" && str != "DEL") ? currentDisplay = "ERROR" : (str === "AC") ? allClear() : (str === "DEL") ? removeADigit() : currentDisplay += str;
+    (currentDisplay === "0" && str === "0") ? 1 : (currentDisplay === "ERROR" && str != "AC") ? 1 : (str === "." && currentDisplay.includes(str)) ? 1 : (str === "-" && currentDisplay.includes(str))? 1 : (str === "-" && currentDisplay != "0")?currentDisplay = str + currentDisplay : (str === "-")? currentDisplay = str :(currentDisplay === "0" && str === ".") ? currentDisplay += str : (currentDisplay === "0" && str != "AC" && str != "DEL") ? currentDisplay = str : (currentDisplay.length + str.length > 10 && str != "AC" && str != "DEL") ? currentDisplay = "ERROR" : (str === "AC") ? allClear() : (str === "DEL") ? removeADigit() : currentDisplay += str;
 
     display.textContent = currentDisplay;
     awaitNumber = false;
@@ -138,6 +144,13 @@ function operate(operator) {
             case "power":
                 power(num1,num2);
                 break;
+            default:
+                console.error("Something went really wrong");
+                break;
+        }
+
+        if(currentOperation === "equals"){
+            currentOperation = "";
         }
     }
 }
@@ -154,6 +167,25 @@ function subtract(x,y){
 
 function multiply(x,y){
     let result = x * y;
+    reset(result);
+}
+function divide(x,y){
+    if(y === 0){
+        currentDisplay = "ERROR";
+        updateDisplay("ERROR");
+        return;
+    }
+    else{
+        let result = x / y;
+        if(result.toString().length > 10 && result.toString().includes(".") && result.toString().indexOf(".") < 8){
+            result = Number.parseFloat(result).toPrecision(6);
+        }
+        reset(result);
+    }
+}
+
+function power(x,y){
+    let result = Math.pow(x,y);
     reset(result);
 }
 

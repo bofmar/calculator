@@ -43,7 +43,7 @@ button{
     grid-gap: 2px;
     height: 40vh;
     grid-template-areas: 
-        "plus multiply pow pow"
+        "plus multiply pow neg"
         "minus divide DEL DEL"
         "seven eight nine equals"
         "four five six equals"
@@ -109,6 +109,9 @@ button{
 }
 #back{
     grid-area: DEL;
+}
+#neg{
+    grid-area: neg;
 }
 
 #clear, #back{
