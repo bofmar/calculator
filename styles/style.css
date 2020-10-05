@@ -28,12 +28,22 @@ button{
     background-color: var(--black);
     color: var(--white);
     font-family: 'Orbitron', sans-serif;
-    width: 35vw;
+    width: 20vw;
     font-size: 40px;
     text-align: right;
     padding-top: 0.4em;
     padding-bottom: 0.4em;
     padding-right: 1.2em;
+}
+
+@media screen and (max-width: 560px){
+    .display{
+        font-size : 30px;
+        width : 150px;
+    }
+    .button{
+        font-size: 15px;
+    }
 }
 
 .button-container{
@@ -120,7 +130,7 @@ button{
 
 #clear:active,
 #back:active{
-    background-color: rgb(6, 218, 112);
+    background-color:  rgb(12, 240, 126);
 }
 
 #equals{
@@ -138,4 +148,13 @@ button{
 .functions:active,
 .non-functions:active{
     background-color: rgba(190,190,190,1);
+}
+
+.active-ops,
+.active-num{
+    background-color: rgba(190,190,190,1);
+}
+
+.active-del{
+    background-color: rgba(12, 240, 126, 1);
 }

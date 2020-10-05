@@ -1,6 +1,80 @@
 const keys = document.querySelectorAll("button");
 const display = document.querySelector(".display");
 
+const usableKeys = [48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 107, 109, 106, 111, 110, 190, 8, 13];
+
+window.addEventListener("keydown", (e) => {
+    if (usableKeys.some(element => e.keyCode === element)) {
+        let code;
+        switch (e.keyCode) {
+            case 48:
+            case 96:
+                code = "zero";
+                break;
+            case 49:
+            case 97:
+                code = "one";
+                break;
+            case 50:
+            case 98:
+                code = "two";
+                break;
+            case 51:
+            case 99:
+                code = "three";
+                break;
+            case 52:
+            case 100:
+                code = "four";
+                break;
+            case 53:
+            case 101:
+                code = "five";
+                break;
+            case 54:
+            case 102:
+                code = "six";
+                break;
+            case 55:
+            case 103:
+                code = "seven";
+                break;
+            case 56:
+            case 104:
+                code = "eight";
+                break;
+            case 57:
+            case 105:
+                code = "nine";
+                break;
+            case 110:
+            case 190:
+                code = ".";
+                break;
+            case 107:
+                code = "plus"
+                break;
+            case 109:
+                code = "minus";
+                break;
+            case 106:
+                code = "multiply";
+                break;
+            case 111:
+                code = "divide";
+                break;
+            case 13:
+                code = "equals";
+                break;
+            case 8:
+                code = "back";
+                break;
+        }
+        e.preventDefault();
+        delegate(code);
+    }
+});
+
 let currentDisplay = "0";
 let currentOperation = "";
 let nextOperation = "";
@@ -18,7 +92,11 @@ keys.forEach(key => {
 
 function getKeyID(e) {
     const keyId = e.target.id;
-    switch (keyId) {
+    delegate(keyId);
+}
+
+function delegate(code) {
+    switch (code) {
         //number buttons
         case "zero":
             updateDisplay("0");
@@ -90,7 +168,7 @@ function getKeyID(e) {
 
 function updateDisplay(str) {
     //max length of display = 10 chars
-    (currentDisplay === "0" && str === "0") ? 1 : (currentDisplay === "ERROR" && str != "AC") ? 1 : (str === "." && currentDisplay.includes(str)) ? 1 : (str === "-" && currentDisplay.includes(str))? 1 : (str === "-" && currentDisplay != "0")?currentDisplay = str + currentDisplay : (str === "-")? currentDisplay = str :(currentDisplay === "0" && str === ".") ? currentDisplay += str : (currentDisplay === "0" && str != "AC" && str != "DEL") ? currentDisplay = str : (currentDisplay.length + str.length > 10 && str != "AC" && str != "DEL") ? currentDisplay = "ERROR" : (str === "AC") ? allClear() : (str === "DEL") ? removeADigit() : currentDisplay += str;
+    (currentDisplay === "0" && str === "0") ? 1 : (currentDisplay === "ERROR" && str != "AC") ? 1 : (str === "." && currentDisplay.includes(str)) ? 1 : (str === "-" && currentDisplay.includes(str)) ? 1 : (str === "-" && currentDisplay != "0") ? currentDisplay = str + currentDisplay : (str === "-") ? currentDisplay = str : (currentDisplay === "0" && str === ".") ? currentDisplay += str : (currentDisplay === "0" && str != "AC" && str != "DEL") ? currentDisplay = str : (currentDisplay.length + str.length > 10 && str != "AC" && str != "DEL") ? currentDisplay = "ERROR" : (str === "AC") ? allClear() : (str === "DEL") ? removeADigit() : currentDisplay += str;
 
     display.textContent = currentDisplay;
     awaitNumber = false;
@@ -133,23 +211,23 @@ function operate(operator) {
                 add(num1, num2);
                 break;
             case "minus":
-                subtract(num1,num2);
+                subtract(num1, num2);
                 break;
             case "divide":
-                divide(num1,num2);
+                divide(num1, num2);
                 break;
             case "multiply":
-                multiply(num1,num2);
+                multiply(num1, num2);
                 break;
             case "power":
-                power(num1,num2);
+                power(num1, num2);
                 break;
             default:
                 console.error("Something went really wrong");
                 break;
         }
 
-        if(currentOperation === "equals"){
+        if (currentOperation === "equals") {
             currentOperation = "";
         }
     }
@@ -160,32 +238,32 @@ function add(x, y) {
     reset(result);
 }
 
-function subtract(x,y){
+function subtract(x, y) {
     let result = x - y;
     reset(result);
 }
 
-function multiply(x,y){
+function multiply(x, y) {
     let result = x * y;
     reset(result);
 }
-function divide(x,y){
-    if(y === 0){
+function divide(x, y) {
+    if (y === 0) {
         currentDisplay = "ERROR";
         updateDisplay("ERROR");
         return;
     }
-    else{
+    else {
         let result = x / y;
-        if(result.toString().length > 10 && result.toString().includes(".") && result.toString().indexOf(".") < 8){
+        if (result.toString().length > 10 && result.toString().includes(".") && result.toString().indexOf(".") < 8) {
             result = Number.parseFloat(result).toPrecision(6);
         }
         reset(result);
     }
 }
 
-function power(x,y){
-    let result = Math.pow(x,y);
+function power(x, y) {
+    let result = Math.pow(x, y);
     reset(result);
 }
 
