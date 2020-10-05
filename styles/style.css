@@ -43,8 +43,8 @@ button{
     grid-gap: 2px;
     height: 40vh;
     grid-template-areas: 
-        "log pow square DEL"
-        "plus minus multiply divide"
+        "plus multiply pow pow"
+        "minus divide DEL DEL"
         "seven eight nine equals"
         "four five six equals"
         "one two three equals"
@@ -104,14 +104,8 @@ button{
     grid-area: AC;
     
 }
-#log{
-    grid-area: log;
-}
 #power{
     grid-area: pow;
-}
-#square-root{
-    grid-area: square;
 }
 #back{
     grid-area: DEL;
