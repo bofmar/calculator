@@ -36,10 +36,10 @@ button{
     padding-right: 1.2em;
 }
 
-@media screen and (max-width: 560px){
+@media screen and (max-width: 760px){
     .display{
         font-size : 30px;
-        width : 150px;
+        width : 200px;
     }
     .button{
         font-size: 15px;
@@ -150,11 +150,14 @@ button{
     background-color: rgba(190,190,190,1);
 }
 
-.active-ops,
 .active-num{
     background-color: rgba(190,190,190,1);
 }
 
 .active-del{
-    background-color: rgba(12, 240, 126, 1);
+    background-color: rgba(12, 240, 126) !important;
+}
+
+.active-eq{
+    background-color:  rgb(236, 74, 15) !important;
 }

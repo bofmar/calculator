@@ -49,7 +49,7 @@ window.addEventListener("keydown", (e) => {
                 break;
             case 110:
             case 190:
-                code = ".";
+                code = "point";
                 break;
             case 107:
                 code = "plus"
@@ -70,10 +70,30 @@ window.addEventListener("keydown", (e) => {
                 code = "back";
                 break;
         }
+
+        if(e.keyCode >= 48 && e.keyCode <= 57 || e.keyCode >= 96){
+            document.querySelector(`#${code}`).classList.add("active-num");
+        }
+        else if(e.key == "Backspace"){
+            document.querySelector(`#${code}`).classList.add("active-del");
+        }
+        else if(e.key === "Enter"){
+            document.querySelector(`#${code}`).classList.add("active-eq")
+        }
         e.preventDefault();
         delegate(code);
     }
 });
+
+window.addEventListener("keyup", (e) => {
+    if(e.key === "Backspace"){
+        document.querySelector(".active-del").classList.remove("active-del");
+    }
+    else if(e.key === "Enter"){
+        document.querySelector(".active-eq").classList.remove("active-eq");
+    }
+    document.querySelector(".active-num").classList.remove("active-num");
+})
 
 let currentDisplay = "0";
 let currentOperation = "";
@@ -155,8 +175,8 @@ function delegate(code) {
             operate("equals");
             break;
         //decimal
-        case "point":
-            updateDisplay(".");
+        case ".":
+            updateDisplay("point");
             break;
         case "neg":
             updateDisplay("-");
