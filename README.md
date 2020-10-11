@@ -5,4 +5,4 @@ An online calculator that was made for the Odin Project. Made using pure HTML, C
 
 # Demo
 
-![](ClacDemo.gif)
+![demo](https://github.com/bofmar/calculator/blob/master/CalcDemo.gif)
