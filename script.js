@@ -1,95 +1,90 @@
 const keys = document.querySelectorAll("button");
 const display = document.querySelector(".display");
 
-const usableKeys = [48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 107, 109, 106, 111, 110, 190, 8, 13];
-
 window.addEventListener("keydown", (e) => {
-    if (usableKeys.some(element => e.keyCode === element)) {
-        let code;
-        switch (e.keyCode) {
-            case 48:
-            case 96:
-                code = "zero";
-                break;
-            case 49:
-            case 97:
-                code = "one";
-                break;
-            case 50:
-            case 98:
-                code = "two";
-                break;
-            case 51:
-            case 99:
-                code = "three";
-                break;
-            case 52:
-            case 100:
-                code = "four";
-                break;
-            case 53:
-            case 101:
-                code = "five";
-                break;
-            case 54:
-            case 102:
-                code = "six";
-                break;
-            case 55:
-            case 103:
-                code = "seven";
-                break;
-            case 56:
-            case 104:
-                code = "eight";
-                break;
-            case 57:
-            case 105:
-                code = "nine";
-                break;
-            case 110:
-            case 190:
-                code = "point";
-                break;
-            case 107:
-                code = "plus"
-                break;
-            case 109:
-                code = "minus";
-                break;
-            case 106:
-                code = "multiply";
-                break;
-            case 111:
-                code = "divide";
-                break;
-            case 13:
-                code = "equals";
-                break;
-            case 8:
-                code = "back";
-                break;
-        }
-
-        if(e.keyCode >= 48 && e.keyCode <= 57 || e.keyCode >= 96){
-            document.querySelector(`#${code}`).classList.add("active-num");
-        }
-        else if(e.key == "Backspace"){
-            document.querySelector(`#${code}`).classList.add("active-del");
-        }
-        else if(e.key === "Enter"){
-            document.querySelector(`#${code}`).classList.add("active-eq")
-        }
-        e.preventDefault();
-        delegate(code);
+    let code;
+    switch (e.keyCode) {
+        case 48:
+        case 96:
+            code = "zero";
+            break;
+        case 49:
+        case 97:
+            code = "one";
+            break;
+        case 50:
+        case 98:
+            code = "two";
+            break;
+        case 51:
+        case 99:
+            code = "three";
+            break;
+        case 52:
+        case 100:
+            code = "four";
+            break;
+        case 53:
+        case 101:
+            code = "five";
+            break;
+        case 54:
+        case 102:
+            code = "six";
+            break;
+        case 55:
+        case 103:
+            code = "seven";
+            break;
+        case 56:
+        case 104:
+            code = "eight";
+            break;
+        case 57:
+        case 105:
+            code = "nine";
+            break;
+        case 110:
+        case 190:
+            code = "point";
+            break;
+        case 107:
+            code = "plus"
+            break;
+        case 109:
+            code = "minus";
+            break;
+        case 106:
+            code = "multiply";
+            break;
+        case 111:
+            code = "divide";
+            break;
+        case 13:
+            code = "equals";
+            break;
+        case 8:
+            code = "back";
+            break;
     }
+    if (e.keyCode >= 48 && e.keyCode <= 57 || e.keyCode >= 96) {
+        document.querySelector(`#${code}`).classList.add("active-num");
+    }
+    else if (e.key == "Backspace") {
+        document.querySelector(`#${code}`).classList.add("active-del");
+    }
+    else if (e.key === "Enter") {
+        document.querySelector(`#${code}`).classList.add("active-eq")
+    }
+    e.preventDefault();
+    delegate(code);
 });
 
 window.addEventListener("keyup", (e) => {
-    if(e.key === "Backspace"){
+    if (e.key === "Backspace") {
         document.querySelector(".active-del").classList.remove("active-del");
     }
-    else if(e.key === "Enter"){
+    else if (e.key === "Enter") {
         document.querySelector(".active-eq").classList.remove("active-eq");
     }
     document.querySelector(".active-num").classList.remove("active-num");
@@ -175,8 +170,8 @@ function delegate(code) {
             operate("equals");
             break;
         //decimal
-        case ".":
-            updateDisplay("point");
+        case "point":
+            updateDisplay(".");
             break;
         case "neg":
             updateDisplay("-");
