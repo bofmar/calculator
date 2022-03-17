@@ -6,37 +6,38 @@
     <title>Calculator</title>
     <link rel="stylesheet" href="styles/reset.css">
     <link rel="stylesheet" href="styles/style.css">
+    <script src="script.js" defer></script>
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron" rel="stylesheet"> 
 </head>
 
 <body>
     <div class="calculator">
-        <div class="display">0</div>
-        <div class="button-container">
-            <button class="non-functions" id="zero">0</button>
-            <button class="non-functions" id="one">1</button>
-            <button class="non-functions" id="two">2</button>
-            <button class="non-functions" id="three">3</button>
-            <button class="non-functions" id="four">4</button>
-            <button class="non-functions" id="five">5</button>
-            <button class="non-functions" id="six">6</button>
-            <button class="non-functions" id="seven">7</button>
-            <button class="non-functions" id="eight">8</button>
-            <button class="non-functions" id="nine">9</button>
-            <button id="equals">=</button>
-            <button class="functions" id="plus">+</button>
-            <button class="functions" id="minus">-</button>
-            <button class="functions" id="divide">&#247;</button>
-            <button class="functions" id="multiply">&#215;</button>
-            <button class="non-functions" id="point">.</button>
-            <button class="non-functions" id="clear">AC</button>
-            <button class="non-functions" id="back">DEL</button>
-            <button class="functions" id="power">x<sup>x</sup></button>
-            <button class="functions" id="neg">neg</button>
+        <div class="output">
+            <div class="previews-operand"></div>
+            <div class="current-operand"></div>
         </div>
+        <button class="functions">+</button>
+        <button class="functions">&#215;</button>
+        <button class="functions">x<sup>x</sup></button>
+        <button class="functions">-</button>
+        <button class="functions">&#247;</button>
+        <button class="functions">&#8730;</button>
+        <button class="green-button">DEL</button>
+        <button class="number-buttons">7</button>
+        <button class="number-buttons">8</button>
+        <button class="number-buttons">9</button>
+        <button class="number-buttons">4</button>
+        <button class="number-buttons">5</button>
+        <button class="number-buttons">6</button>
+        <button class="number-buttons">1</button>
+        <button class="number-buttons">2</button>
+        <button class="number-buttons">3</button>
+        <button class="number-buttons">0</button>
+        <button class="number-buttons">.</button>
+        <button class="green-button">AC</button>
+        <button class="orange-button">=</button>
     </div>
-    <script type="text/javascript" src="script.js"></script>
 </body>
 
 </html>

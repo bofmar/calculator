@@ -24,7 +24,7 @@ button{
     box-shadow: 0 0 25px 0 rgba(0,0,0,0.66);
 }
 
-.display{
+.output{
     background-color: var(--black);
     color: var(--white);
     font-family: 'Orbitron', sans-serif;
@@ -63,8 +63,8 @@ button{
     grid-gap: 2px;
     height: 40vh;
     grid-template-areas: 
-        "plus multiply pow neg"
-        "minus divide DEL DEL"
+        "plus multiply pow DEL"
+        "minus divide root DEL"
         "seven eight nine equals"
         "four five six equals"
         "one two three equals"
@@ -134,20 +134,19 @@ button{
     grid-area: neg;
 }
 
-#clear, #back{
+.green-button{
     background-color: var(--green);
 }
 
-#clear:active,
-#back:active{
+.green-button:active{
     background-color:  rgb(12, 240, 126);
 }
 
-#equals{
+.orange-button{
     background-color: rgba(241, 90, 34, 1);
 }
 
-#equals:active{
+.orange-button:active{
     background-color:  rgb(236, 74, 15);
 }
 
@@ -156,11 +155,11 @@ button{
 }
 
 .functions:active,
-.non-functions:active{
+.number-buttons:active{
     background-color: rgba(190,190,190,1);
 }
 
-.active-num{
+/* .active-num{
     background-color: rgba(190,190,190,1);
 }
 
@@ -170,4 +169,4 @@ button{
 
 .active-eq{
     background-color:  rgb(236, 74, 15) !important;
-}
+} */
