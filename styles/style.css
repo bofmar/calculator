@@ -70,26 +70,15 @@ button{
     font-size: 2.5rem;
 }
 
-/* @media screen and (max-width: 760px){
-    .display{
-        font-size : 30px !important;
-        width : 300px !important;
-    }
+@media screen and (max-width: 760px){
     .button{
         font-size: 15px !important;
     }
+    .calculator{
+        grid-template-columns: repeat(4,70px);
+        grid-template-rows: minmax(120px, auto) repeat(6,70px);
+    }
 }
-
-@media screen and (max-width: 760px){
-    .display{
-        font-size : 30px;
-        width : 200px;
-    }
-    .button{
-        font-size: 15px;
-    }
-} */
-
 
 /*
     Conditional Stylization of buttons
