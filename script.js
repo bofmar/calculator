@@ -14,7 +14,7 @@ class Calculator{
 
     //delete
     delete(){
-
+        this.currentOperand = this.currentOperand.toString().slice(0,-1)
     }
 
     //append number
@@ -75,10 +75,34 @@ class Calculator{
         this.previousOperand = "";
     }
 
+    getDisplayNumber(number){
+        const strNumber = number.toString();
+        const intDigits = parseFloat(strNumber.split(".")[0]);
+        const decimalDigits = strNumber.split(".")[1];
+        let intDisplay;
+        if(isNaN(intDigits)){
+            intDisplay = "";
+        }
+        else{
+            intDisplay = intDigits.toLocaleString("en", {maximumFractionDigits: 0});
+        }
+        if(decimalDigits != null){
+            return `${intDisplay}.${decimalDigits}`;
+        }
+        else{
+            return intDisplay;
+        }
+    }
+
     //update display
     updateDisplay(){
-        this.currentOperandAndTextElement.innerText = this.currentOperand;
-        this.previousOperandAndTextElement.innerText = this.previousOperand;
+        this.currentOperandAndTextElement.innerText = this.getDisplayNumber(this.currentOperand);
+        if(this.operation != null){
+            this.previousOperandAndTextElement.innerText = `${this.getDisplayNumber(this.previousOperand)} ${this.operation}`;            
+        }
+        else{
+            this.previousOperandAndTextElement.innerText = "";
+        }
     }
 }
 
@@ -109,5 +133,15 @@ operations.forEach(operation =>{
 
 equals.addEventListener("click", (button) =>{
     calculator.compute();
+    calculator.updateDisplay();
+})
+
+allClear.addEventListener("click", ()=>{
+    calculator.clear();
+    calculator.updateDisplay();
+})
+
+deleteButton.addEventListener("click", () => {
+    calculator.delete();
     calculator.updateDisplay();
 })
