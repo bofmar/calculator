@@ -118,14 +118,16 @@ button{
     background-color: rgba(190,190,190,1);
 }
 
-/* .active-num{
+/* Javascript activated classes */
+
+.active-num-op{
     background-color: rgba(190,190,190,1);
 }
 
-.active-del{
+.active-green{
     background-color: rgba(12, 240, 126) !important;
 }
 
 .active-eq{
     background-color:  rgb(236, 74, 15) !important;
-} */
+}

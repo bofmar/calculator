@@ -7,10 +7,11 @@ A rudimentary online calculator that was made for the Odin Project. Made using H
 * Subtraction.
 * Multiplication.
 * Division.
+* Exponents.
+* Roots.
 * Backspace and All Clear button.
-*  Getting the power of a number.
-* Input of negative numbers.
-* Partial keyboard support.
+* Support of negative numbers.
+* Full keyboard support.
 
 
 ## Demo

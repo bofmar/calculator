@@ -46,7 +46,6 @@ class Calculator{
         if(isNaN(previous) || isNaN(current)){
             return;
         }
-        console.log(this.operation)
         switch(this.operation){
             case "+":
                 computation = previous + current;
@@ -69,13 +68,13 @@ class Calculator{
             default:
                 console.error(`Invalid computation ${this.operation}`);
                 return;            
+            }
+            this.currentOperand = computation;
+            this.operation = undefined;
+            this.previousOperand = "";
         }
-        this.currentOperand = computation;
-        this.operation = undefined;
-        this.previousOperand = "";
-    }
-
-    getDisplayNumber(number){
+        
+        getDisplayNumber(number){
         const strNumber = number.toString();
         const intDigits = parseFloat(strNumber.split(".")[0]);
         const decimalDigits = strNumber.split(".")[1];
@@ -93,7 +92,7 @@ class Calculator{
             return intDisplay;
         }
     }
-
+    
     //update display
     updateDisplay(){
         this.currentOperandAndTextElement.innerText = this.getDisplayNumber(this.currentOperand);
@@ -113,6 +112,8 @@ const allClear = document.querySelector(".AC-button");
 const deleteButton = document.querySelector(".del-button");
 const previousOperandAndTextElement = document.querySelector("[data-previous-operand]");
 const currentOperandAndTextElement = document.querySelector("[data-current-operand]");
+const numArray = ["0","1","2","3","4","5","6","7","8","9","."]
+const operatorsArray = ["+","-","^"]
 
 const calculator = new Calculator(previousOperandAndTextElement, currentOperandAndTextElement);
 console.log(calculator);
@@ -144,4 +145,89 @@ allClear.addEventListener("click", ()=>{
 deleteButton.addEventListener("click", () => {
     calculator.delete();
     calculator.updateDisplay();
+})
+
+//keyboard support
+
+// prevent default keyboard interaction
+
+window.addEventListener("keydown", (e) => {
+    e.preventDefault();
+    console.log(e.key);
+    if(numArray.includes(e.key.toString())){
+        calculator.appendNumber(e.key.toString());
+        calculator.updateDisplay();
+        numberButtons.forEach(button => {
+            if(button.innerText.toString() === e.key.toString()){
+                button.classList.add("active-num-op");
+            }
+        })
+    }
+    else if(operatorsArray.includes(e.key.toString())){
+        calculator.chooseOperation(e.key.toString());
+        calculator.updateDisplay();
+        operations.forEach(op => {
+            if(op.innerText.toString() === e.key.toString()){
+                op.classList.add("active-num-op")
+            }
+        })
+    }
+    else if(e.key.toString() === "*"){
+        calculator.chooseOperation("×");
+        calculator.updateDisplay();
+        operations.forEach(op => {
+            if(op.innerText.toString() === "×"){
+                op.classList.add("active-num-op")
+            }
+        })
+    }
+    else if(e.key.toString() === "/"){
+        calculator.chooseOperation("÷");
+        calculator.updateDisplay();
+        operations.forEach(op => {
+            if(op.innerText.toString() === "÷"){
+                op.classList.add("active-num-op")
+            }
+        })
+    }
+    else if(e.key.toString() === "Enter"){
+        calculator.compute();
+        calculator.updateDisplay();
+        equals.classList.add("active-eq");
+    }
+    else if(e.key.toString() === "Delete"){
+        calculator.clear();
+        calculator.updateDisplay();
+        allClear.classList.add("active-green");
+    }
+    else if(e.key.toString() === "Backspace"){
+        calculator.delete();
+        calculator.updateDisplay();
+        deleteButton.classList.add("active-green");
+    }
+    else{
+        return;
+    }
+});
+
+window.addEventListener("keyup", () => {
+    const targetNum = document.querySelector(".active-num-op");
+    if(targetNum !== null){
+        targetNum.classList.remove("active-num-op");
+        return
+    }
+
+    const targetGreen = document.querySelector(".active-green");
+    if(targetGreen !== null){
+        targetGreen.classList.remove("active-green");
+        return
+    }
+
+    const targetEq = document.querySelector(".active-eq");
+    if(targetEq !== null){
+        targetEq.classList.remove("active-eq");
+        return
+    }
+
+    return
 })
