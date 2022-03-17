@@ -1,16 +1,18 @@
+*,
+*::after,
+*::before{
+    box-sizing: border-box;
+}
+
 :root{
     --white: rgba(255,255,255,0.86);
-    --black: rgba(0,0,0,0.86);
+    --dull-white: rgba(255,255,255, 0.70);
+    --black: rgba(0,0,0,0.75);
     --green: rgba(63, 195, 128, 1);
 }
 
 body{
-    background: linear-gradient(45deg, rgba(48,48,50,1) 0%, rgba(36,36,99,0.7147059507396709) 50%, rgba(0,0,0,1) 100%);
-    width: 100%;
-    height: 100vh;
-    display:flex;
-    justify-content: center;
-    align-items: center;
+    background: linear-gradient(45deg, rgba(48,48,50,1) 0%, rgba(36,36,99,0.7147059507396709) 50%, rgba(0,0,0,1) 100%);    
 }
 
 button{
@@ -22,21 +24,53 @@ button{
 
 .calculator{
     box-shadow: 0 0 25px 0 rgba(0,0,0,0.66);
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    min-height: 100vh;
+    grid-template-columns: repeat(4,100px);
+    grid-template-rows: minmax(120px, auto) repeat(6,100px);
+}
+
+.calculator>button{
+    cursor: pointer;
+    font-size: 2rem;
+    border: 1px solid rgba(0,0,0,0.86);
+    outline: none;    
+}
+
+.del-button{
+    grid-row: span 2;
+}
+
+.equals-button{
+    grid-row: span 4;
 }
 
 .output{
     background-color: var(--black);
-    color: var(--white);
     font-family: 'Orbitron', sans-serif;
-    width: 20vw;
-    font-size: 40px;
-    text-align: right;
-    padding-top: 0.4em;
-    padding-bottom: 0.4em;
-    padding-right: 1.2em;
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-around;
+    padding: 10px;
+    word-wrap: break-word;
+    word-break: break-all;
 }
 
-@media screen and (max-width: 760px){
+.output .previews-operand{
+    color: var(--dull-white);
+    font-size: 1.5rem;
+}
+
+.output .current-operand{
+    color: var(--white);
+    font-size: 2.5rem;
+}
+
+/* @media screen and (max-width: 760px){
     .display{
         font-size : 30px !important;
         width : 300px !important;
@@ -54,90 +88,19 @@ button{
     .button{
         font-size: 15px;
     }
-}
+} */
 
-.button-container{
-    background-color: var(--black);
-    display:grid;
-    grid-template-columns: repeat(4,auto);
-    grid-gap: 2px;
-    height: 40vh;
-    grid-template-areas: 
-        "plus multiply pow DEL"
-        "minus divide root DEL"
-        "seven eight nine equals"
-        "four five six equals"
-        "one two three equals"
-        "zero point AC equals";
-}
 
-#zero{
-    grid-area: zero;
-}
-#one{
-    grid-area: one;
-    
-}
-#two{
-    grid-area: two;
-}
-#three{
-    grid-area: three;
-}
-#four{
-    grid-area: four;    
-}
-#five{
-    grid-area: five;
-}
-#six{
-    grid-area: six;
-}
-#seven{
-    grid-area: seven;
-}
-#eight{
-    grid-area: eight;
-}
-#nine{
-    grid-area: nine;
-}
-#equals{
-    grid-area: equals;
-}
-#plus{
-    grid-area: plus;
-}
-#minus{
-    grid-area: minus;
-}
-#divide{
-    grid-area: divide;
-}
-#multiply{
-    grid-area: multiply;
-}
-#point{
-    grid-area: point;
-}
-#clear{
-    grid-area: AC;
-    
-}
-#power{
-    grid-area: pow;
-}
-#back{
-    grid-area: DEL;
-}
-#neg{
-    grid-area: neg;
-}
+/*
+    Conditional Stylization of buttons
+*/
 
 .green-button{
     background-color: var(--green);
 }
-
+.green-button:hover{
+    background-color: rgba(63, 195, 128, 0.75);
+}
 .green-button:active{
     background-color:  rgb(12, 240, 126);
 }
@@ -146,6 +109,9 @@ button{
     background-color: rgba(241, 90, 34, 1);
 }
 
+.orange-button:hover{
+    background-color:  rgba(236, 74, 15, 0.75)
+}
 .orange-button:active{
     background-color:  rgb(236, 74, 15);
 }
@@ -154,6 +120,10 @@ button{
     background-color: rgba(170,170,170,1);
 }
 
+.functions:hover,
+.number-buttons:hover{
+    background-color: rgba(190,190,190,0.75)
+}
 .functions:active,
 .number-buttons:active{
     background-color: rgba(190,190,190,1);
