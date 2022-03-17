@@ -1,301 +1,113 @@
-const keys = document.querySelectorAll("button");
-const display = document.querySelector(".display");
-
-window.addEventListener("keydown", (e) => {
-    let code;
-    switch (e.keyCode) {
-        case 48:
-        case 96:
-            code = "zero";
-            break;
-        case 49:
-        case 97:
-            code = "one";
-            break;
-        case 50:
-        case 98:
-            code = "two";
-            break;
-        case 51:
-        case 99:
-            code = "three";
-            break;
-        case 52:
-        case 100:
-            code = "four";
-            break;
-        case 53:
-        case 101:
-            code = "five";
-            break;
-        case 54:
-        case 102:
-            code = "six";
-            break;
-        case 55:
-        case 103:
-            code = "seven";
-            break;
-        case 56:
-        case 104:
-            code = "eight";
-            break;
-        case 57:
-        case 105:
-            code = "nine";
-            break;
-        case 110:
-        case 190:
-            code = "point";
-            break;
-        case 107:
-            code = "plus"
-            break;
-        case 109:
-            code = "minus";
-            break;
-        case 106:
-            code = "multiply";
-            break;
-        case 111:
-            code = "divide";
-            break;
-        case 13:
-            code = "equals";
-            break;
-        case 8:
-            code = "back";
-            break;
+class Calculator{
+    constructor(previousOperandAndTextElement,currentOperandAndTextElement){
+        this.previousOperandAndTextElement = previousOperandAndTextElement;
+        this.currentOperandAndTextElement = currentOperandAndTextElement;
+        this.clear();
     }
-    if (e.keyCode >= 48 && e.keyCode <= 57 || e.keyCode >= 96) {
-        document.querySelector(`#${code}`).classList.add("active-num");
+
+    //clear
+    clear(){
+        this.currentOperand = "";
+        this.previousOperand = "";
+        this.operation = undefined;
     }
-    else if (e.key == "Backspace") {
-        document.querySelector(`#${code}`).classList.add("active-del");
+
+    //delete
+    delete(){
+
     }
-    else if (e.key === "Enter") {
-        document.querySelector(`#${code}`).classList.add("active-eq")
+
+    //append number
+    appendNumber(number){
+        if(number === "." && this.currentOperand.includes(".")){
+            return
+        } //prevent multiple periods from being added
+        this.currentOperand = this.currentOperand.toString() + number.toString();
     }
-    e.preventDefault();
-    delegate(code);
-});
 
-window.addEventListener("keyup", (e) => {
-    if (e.key === "Backspace") {
-        document.querySelector(".active-del").classList.remove("active-del");
+    //choose operation
+    chooseOperation(operation){
+        if(this.currentOperand === ""){
+            return;
+        }
+        if(this.previousOperand !== ""){
+            this.compute();
+        }
+        this.operation = operation;
+        this.previousOperand = this.currentOperand;
+        this.currentOperand = "";
     }
-    else if (e.key === "Enter") {
-        document.querySelector(".active-eq").classList.remove("active-eq");
-    }
-    document.querySelector(".active-num").classList.remove("active-num");
-})
 
-let currentDisplay = "0";
-let currentOperation = "";
-let nextOperation = "";
-
-let awaitNumber = false;
-
-let num1;
-let num2;
-
-display.textContent = currentDisplay;
-
-keys.forEach(key => {
-    key.addEventListener("click", getKeyID);
-})
-
-function getKeyID(e) {
-    const keyId = e.target.id;
-    delegate(keyId);
-}
-
-function delegate(code) {
-    switch (code) {
-        //number buttons
-        case "zero":
-            updateDisplay("0");
-            break;
-        case "one":
-            updateDisplay("1");
-            break;
-        case "two":
-            updateDisplay("2");
-            break;
-        case "three":
-            updateDisplay("3");
-            break;
-        case "four":
-            updateDisplay("4");
-            break;
-        case "five":
-            updateDisplay("5");
-            break;
-        case "six":
-            updateDisplay("6");
-            break;
-        case "seven":
-            updateDisplay("7");
-            break;
-        case "eight":
-            updateDisplay("8");
-            break;
-        case "nine":
-            updateDisplay("9");
-            break;
-        //All Clear and DEL
-        case "clear":
-            updateDisplay("AC");
-            break;
-        case "back":
-            updateDisplay("DEL");
-            break;
-        //operations
-        case "plus":
-            operate("plus");
-            break;
-        case "minus":
-            operate("minus");
-            break;
-        case "divide":
-            operate("divide");
-            break;
-        case "multiply":
-            operate("multiply");
-            break;
-        case "power":
-            operate("power");
-            break;
-        case "equals":
-            operate("equals");
-            break;
-        //decimal
-        case "point":
-            updateDisplay(".");
-            break;
-        case "neg":
-            updateDisplay("-");
-            break;
-        default:
-            console.log("something else was pressed");
-    }
-}
-
-function updateDisplay(str) {
-    //max length of display = 10 chars
-    (currentDisplay === "0" && str === "0") ? 1 : (currentDisplay === "ERROR" && str != "AC") ? 1 : (str === "." && currentDisplay.includes(str)) ? 1 : (str === "-" && currentDisplay.includes(str)) ? 1 : (str === "-" && currentDisplay != "0") ? currentDisplay = str + currentDisplay : (str === "-") ? currentDisplay = str : (currentDisplay === "0" && str === ".") ? currentDisplay += str : (currentDisplay === "0" && str != "AC" && str != "DEL") ? currentDisplay = str : (currentDisplay.length + str.length > 10 && str != "AC" && str != "DEL") ? currentDisplay = "ERROR" : (str === "AC") ? allClear() : (str === "DEL") ? removeADigit() : currentDisplay += str;
-
-    display.textContent = currentDisplay;
-    awaitNumber = false;
-}
-
-function removeADigit() {
-    let displayToArray = [...currentDisplay];
-    currentDisplay = displayToArray.slice(0, displayToArray.length - 1).join("");
-    if (currentDisplay.length < 1) {
-        currentDisplay = "0";
-    }
-}
-
-function allClear() {
-    currentDisplay = "0";
-    storedNumber = 0;
-    currentOperation = "";
-}
-
-function operate(operator) {
-    if (currentDisplay === "ERROR") {
-        return;
-    }
-    if (awaitNumber) {
-        currentOperation = operator;
-    }
-    else if (currentOperation === "") {
-        currentOperation = operator;
-        num1 = +currentDisplay;
-        awaitNumber = true;
-        currentDisplay = "0";
-        return;
-    }
-    else {
-        num2 = +currentDisplay;
-        nextOperation = operator;
-
-        switch (currentOperation) {
-            case "plus":
-                add(num1, num2);
+    //compute
+    compute(){
+        let computation;
+        const previous = parseFloat(this.previousOperand);
+        const current = parseFloat(this.currentOperand);
+        if(isNaN(previous) || isNaN(current)){
+            return;
+        }
+        console.log(this.operation)
+        switch(this.operation){
+            case "+":
+                computation = previous + current;
                 break;
-            case "minus":
-                subtract(num1, num2);
+            case "-":
+                computation = previous - current;
                 break;
-            case "divide":
-                divide(num1, num2);
+            case "×": 
+                computation = previous * current;
                 break;
-            case "multiply":
-                multiply(num1, num2);
+            case "^": 
+                computation = Math.pow(previous, current);
                 break;
-            case "power":
-                power(num1, num2);
+            case "÷": 
+                computation = previous / current;
+                break;
+            case "√": 
+                computation = Math.pow(previous, 1 / current);
                 break;
             default:
-                console.error("Something went really wrong");
-                break;
+                console.error(`Invalid computation ${this.operation}`);
+                return;            
         }
+        this.currentOperand = computation;
+        this.operation = undefined;
+        this.previousOperand = "";
+    }
 
-        if (currentOperation === "equals") {
-            currentOperation = "";
-        }
+    //update display
+    updateDisplay(){
+        this.currentOperandAndTextElement.innerText = this.currentOperand;
+        this.previousOperandAndTextElement.innerText = this.previousOperand;
     }
 }
 
-function add(x, y) {
-    let result = x + y;
-    reset(result);
-}
+const numberButtons = document.querySelectorAll(".number-buttons");
+const operations = document.querySelectorAll(".operations");
+const equals = document.querySelector(".equals-button");
+const allClear = document.querySelector(".AC-button");
+const deleteButton = document.querySelector(".del-button");
+const previousOperandAndTextElement = document.querySelector("[data-previous-operand]");
+const currentOperandAndTextElement = document.querySelector("[data-current-operand]");
 
-function subtract(x, y) {
-    let result = x - y;
-    reset(result);
-}
+const calculator = new Calculator(previousOperandAndTextElement, currentOperandAndTextElement);
+console.log(calculator);
 
-function multiply(x, y) {
-    let result = x * y;
-    reset(result);
-}
-function divide(x, y) {
-    if (y === 0) {
-        currentDisplay = "ERROR";
-        updateDisplay("ERROR");
-        return;
-    }
-    else {
-        let result = x / y;
-        if (result.toString().length > 10 && result.toString().includes(".") && result.toString().indexOf(".") < 8) {
-            result = Number.parseFloat(result).toPrecision(6);
-        }
-        reset(result);
-    }
-}
+numberButtons.forEach(button =>{
+    button.addEventListener("click", () =>{
+        calculator.appendNumber(button.innerText);
+        calculator.updateDisplay();
+    })
+})
 
-function power(x, y) {
-    let result = Math.pow(x, y);
-    reset(result);
-}
+operations.forEach(operation =>{
+    operation.addEventListener("click", () =>{
+        calculator.chooseOperation(operation.innerText);
+        calculator.updateDisplay();
+    })
+})
 
-function reset(result) {
-    if (result.toString().length > 10) {
-        currentDisplay = "ERROR";
-        updateDisplay("ERROR");
-        return;
-    }
-    awaitNumber = true;
-    num1 = result;
-    currentOperation = nextOperation;
-    nextOperation = "";
-    num2 = 0;
-    currentDisplay = "0";
-
-    updateDisplay(result.toString());
-
-    currentDisplay = "0";
-}
+equals.addEventListener("click", (button) =>{
+    calculator.compute();
+    calculator.updateDisplay();
+})

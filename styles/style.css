@@ -60,7 +60,7 @@ button{
     word-break: break-all;
 }
 
-.output .previews-operand{
+.output .previous-operand{
     color: var(--dull-white);
     font-size: 1.5rem;
 }
@@ -105,15 +105,15 @@ button{
     background-color:  rgb(236, 74, 15);
 }
 
-.functions{
+.operations{
     background-color: rgba(170,170,170,1);
 }
 
-.functions:hover,
+.operations:hover,
 .number-buttons:hover{
     background-color: rgba(190,190,190,0.75)
 }
-.functions:active,
+.operations:active,
 .number-buttons:active{
     background-color: rgba(190,190,190,1);
 }
