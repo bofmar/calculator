@@ -16,4 +16,4 @@ A rudimentary online calculator that was made for the Odin Project. Made using H
 
 ## Demo
 
-![demo](https://github.com/bofmar/calculator/blob/master/CalcDemo.gif)
+![demo](https://github.com/bofmar/calculator/blob/master/CalcDemoNew.gif)
